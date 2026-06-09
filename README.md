@@ -67,6 +67,13 @@ pip install -e ".[dev]"
 
 ## Quick start
 
+Run from the repository root after installation:
+
+```bash
+cd jpclaims
+pip install -e ".[dev]"
+```
+
 ```python
 import pandas as pd
 from jpclaims import load_code_definitions, normalize_events, build_patient_datamart
@@ -88,7 +95,11 @@ dm, report = build_patient_datamart(
     code_definitions=defs,
     return_report=True,
 )
+print(len(dm), report["patient_retention_check"])
+# Expected: 3 1.0
 ```
+
+This flow is covered by `tests/test_quickstart.py`.
 
 ## Examples
 
