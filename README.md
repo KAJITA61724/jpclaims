@@ -29,18 +29,20 @@ Pipeline:
 
 **Diagnosis codes, drug codes, and procedure codes are never hardcoded in the library.** Users supply definitions via YAML, JSON, or CSV.
 
-Study-specific examples (e.g. `examples/fpies_feature_definitions.yaml`) are **illustrative samples only**. Validity, sensitivity, and clinical appropriateness must be verified by each user.
+Study-specific examples (e.g. `examples/fpies_feature_definitions.yaml`) are **illustrative samples only**. Validity, sensitivity, and clinical appropriateness must be verified by each user. See `examples/README.md`.
 
-## Important research cautions
+## Important Notes
 
-- Receipt diagnoses are **billing codes**, not confirmed clinical diagnoses
-- Suspected diagnoses (`疑いフラグ`) must be handled explicitly in definitions
-- Observation periods, washout, index dates, and outcome windows must be designed by researchers
-- Using post-index information in baseline features causes **information leakage**
-- This library is for **research preprocessing and feature engineering only** — not for clinical diagnosis or treatment decisions
-- v0.1 is early development; **APIs may change** without notice
+- This package does not include real patient-level claims data.
+- This package does not include proprietary master files or code dictionaries.
+- Users must provide their own diagnosis, drug, procedure, and master code definitions.
+- Claims diagnoses are billing diagnoses and may not represent clinically confirmed diagnoses.
+- Researchers should explicitly define suspected diagnosis handling, observation windows, washout periods, index dates, and outcome definitions.
+- Do not use post-index information when constructing baseline features.
+- This package is intended for research preprocessing and feature engineering, not for clinical decision-making.
+- v0.1 is an early release; APIs may change before v1.0.
 
-See `docs/research_cautions.md` and `docs/data_privacy.md` for details.
+See also `docs/research_cautions.md` and `docs/data_privacy.md`.
 
 ## Supported input tables
 
@@ -100,6 +102,22 @@ print(len(dm), report["patient_retention_check"])
 ```
 
 This flow is covered by `tests/test_quickstart.py`.
+
+### YAML definition example
+
+See `examples/minimal_code_definitions.yaml` for generic diagnosis, medication, procedure, and co-occurrence groups.
+
+### QC report example
+
+```python
+from jpclaims.reports.json_report import write_json_report
+
+dm, report = build_patient_datamart(..., return_report=True)
+write_json_report(report, "qc_report.json")
+print(report["code_definition_hash"], report["patient_retention_check"])
+```
+
+Runnable script: `examples/build_quality_report_example.py`
 
 ## Examples
 

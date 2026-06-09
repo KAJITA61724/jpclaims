@@ -46,8 +46,15 @@ Use this before pushing to a **private** remote, and again before making the rep
 - [ ] Author list and attribution reviewed
 - [ ] No embedded credentials in git history (`git log -p` spot check)
 
-## Public release gate
+## Public OSS release gate
 
-Public release is appropriate only when **all items above are checked** and CI is green.
+Public release is appropriate only when **all items above are checked** and:
 
-Until then: **Private GitHub push only.**
+- [ ] GitHub Actions pass on Python 3.10, 3.11, and 3.12
+- [ ] No Node.js deprecation warnings block CI annotations (or mitigated via action upgrades)
+- [ ] `tests/test_quickstart.py` passes
+- [ ] `tests/test_release_safety.py` passes
+- [ ] README Important Notes section is complete
+- [ ] Organization approves Apache-2.0 license and example disease code publication
+
+Until then: **Private GitHub repository only.**

@@ -41,7 +41,7 @@ def main() -> None:
         code_definitions=defs,
         return_report=True,
     )
-    dm.to_parquet(EXAMPLES / "patient_datamart.parquet", index=False)
+    dm.to_csv(EXAMPLES / "patient_datamart.csv", index=False)
     write_json_report(report, EXAMPLES / "patient_datamart_qc.json")
     print(f"Wrote datamart with {len(dm)} rows")
 

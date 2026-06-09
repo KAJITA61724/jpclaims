@@ -27,7 +27,7 @@ def main() -> None:
         procedure_event=events["procedure_event"],
         code_definitions=defs,
     )
-    panel.to_parquet(EXAMPLES / "monthly_panel.parquet", index=False)
+    panel.to_csv(EXAMPLES / "monthly_panel.csv", index=False)
     print(panel.head())
 
 

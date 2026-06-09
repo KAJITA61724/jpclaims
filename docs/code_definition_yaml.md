@@ -48,6 +48,10 @@ diagnosis_groups:
 
 Set `exclude_suspected: true` to drop rows where `suspected_flag == 1`.
 
+### Primary diagnosis only
+
+Set `primary_only: true` to keep rows where `primary_flag == 1`.
+
 ## Medication example
 
 ```yaml

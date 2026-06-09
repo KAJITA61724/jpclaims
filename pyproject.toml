@@ -28,7 +28,7 @@ dependencies = [
 
 [project.optional-dependencies]
 parquet = ["pyarrow>=14.0"]
-dev = ["pytest>=7.0", "ruff>=0.4", "pyarrow>=14.0"]
+dev = ["pytest>=7.0", "ruff>=0.4", "pyarrow>=14.0", "build>=1.0"]
 
 [project.urls]
 Homepage = "https://github.com/KAJITA61724/jpclaims"

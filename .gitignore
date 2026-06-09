@@ -10,11 +10,18 @@ __pycache__/
 .eggs/
 dist/
 build/
+.coverage
+htmlcov/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
 .venv/
 venv/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
 
 # IDE / OS
 .DS_Store
@@ -42,6 +49,6 @@ secrets/
 # Generated example outputs
 examples/*.parquet
 examples/*.json
-examples/patient_datamart*
-examples/monthly_panel*
-examples/qc_report*
+examples/patient_datamart.csv
+examples/monthly_panel.csv
+examples/qc_report.json
