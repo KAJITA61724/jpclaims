@@ -1,3 +1,4 @@
+![tests](https://github.com/KAJITA61724/jpclaims/actions/workflows/tests.yml/badge.svg)
 # jpclaims
 
 Python toolkit for cleaning and feature engineering Japanese health insurance claims data.
