@@ -1,0 +1,125 @@
+# Illustrative case-definition sample ONLY.
+# - Not used by library core
+# - Contains fictional code lists, not real study counts or prevalences
+# - Users must validate clinical and operational appropriateness
+diagnosis_groups:
+  fpies_name:
+    logic: OR
+    rules:
+      - code_column: diagnosis_code
+        codes: ["8848201"]
+        match: exact
+        exclude_suspected: true
+      - code_column: diagnosis_name
+        codes: ["食物蛋白誘発", "FPIES"]
+        match: contains
+        exclude_suspected: true
+    output:
+      flag: true
+      month_count: true
+      first_month: true
+      last_month: true
+      incident:
+        washout_months: 6
+  k522:
+    code_column: icd10_code
+    codes: ["K52.2"]
+    match: prefix
+    exclude_suspected: true
+    output:
+      flag: true
+      month_count: true
+      first_month: true
+      last_month: true
+      incident:
+        washout_months: 6
+  asthma:
+    code_column: icd10_code
+    codes: ["J45", "J46"]
+    match: prefix
+    output:
+      flag: true
+      month_count: true
+
+medication_groups:
+  steroid:
+    code_column: drug_name
+    codes: ["プレド", "デキサ", "ヒドロコルチ"]
+    match: contains
+    output:
+      flag: true
+  antiemetic:
+    code_column: drug_name
+    codes: ["オンダンセトロン", "ドンペリドン"]
+    match: contains
+    output:
+      flag: true
+  adrenaline:
+    code_column: drug_name
+    codes: ["アドレナリン", "エピネフリン"]
+    match: contains
+    output:
+      flag: true
+  infusion:
+    code_column: drug_name
+    codes: ["輸液", "生理食塩液"]
+    match: contains
+    output:
+      flag: true
+
+procedure_groups:
+  ofc_extended:
+    code_column: procedure_code
+    codes: ["190178210", "190178310", "160180410"]
+    match: exact
+    output:
+      flag: true
+      count: true
+      month_count: true
+      first_month: true
+      last_month: true
+
+cooccurrence_groups:
+  fpies_name_ofc_same_month:
+    logic: AND
+    time_scope: same_month
+    components:
+      - table: condition_event
+        group: fpies_name
+      - table: procedure_event
+        group: ofc_extended
+    output:
+      flag: true
+      month_count: true
+      first_month: true
+      last_month: true
+      incident:
+        washout_months: 6
+
+composite_features:
+  acute_med_support:
+    logic: OR
+    components:
+      - med_steroid_flag_obs
+      - med_antiemetic_flag_obs
+      - med_adrenaline_flag_obs
+      - med_infusion_flag_obs
+  post12_unfavorable_proxy:
+    logic: threshold
+    threshold: 2
+    components:
+      - post12_inpatient_any
+      - post12_acute_med_support_any
+      - post12_gi_any
+      - post12_ofc_any
+
+exclusive_groups:
+  fpies_primary_group:
+    default: other
+    rules:
+      - label: FPIES_name_plus_OFC_same_month
+        condition: combo_fpies_name_ofc_same_month_flag_obs == 1
+      - label: FPIES_name_without_same_month_OFC
+        condition: dx_fpies_name_flag_obs == 1
+      - label: K52_2_only
+        condition: dx_k522_flag_obs == 1

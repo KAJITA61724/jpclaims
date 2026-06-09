@@ -1,0 +1,108 @@
+diagnosis_groups:
+  diabetes:
+    code_column: icd10_code
+    codes: ["E10", "E11", "E12", "E13", "E14"]
+    match: prefix
+    exclude_suspected: true
+    output:
+      flag: true
+      count: true
+      claim_count: true
+      month_count: true
+      first_month: true
+      last_month: true
+      incident:
+        washout_months: 6
+  hypertension:
+    code_column: icd10_code
+    codes: ["I10", "I11", "I12", "I13", "I15"]
+    match: prefix
+    exclude_suspected: true
+    output:
+      flag: true
+      month_count: true
+      first_month: true
+      last_month: true
+
+medication_groups:
+  antihypertensive:
+    code_column: atc_code
+    codes: ["C02", "C03", "C07", "C08", "C09"]
+    match: prefix
+    output:
+      flag: true
+      count: true
+      month_count: true
+      first_month: true
+      last_month: true
+      total_days: true
+      total_quantity: true
+  antibiotic:
+    code_column: atc_code
+    codes: ["J01"]
+    match: prefix
+    output:
+      flag: true
+      month_count: true
+      incident:
+        washout_months: 6
+
+procedure_groups:
+  dialysis:
+    code_column: procedure_code
+    codes: ["140000000", "140000001"]
+    match: exact
+    output:
+      flag: true
+      count: true
+      month_count: true
+      first_month: true
+      last_month: true
+      total_points: true
+
+cooccurrence_groups:
+  diabetes_with_antihypertensive_same_month:
+    logic: AND
+    time_scope: same_month
+    components:
+      - table: condition_event
+        group: diabetes
+      - table: condition_event
+        group: hypertension
+    output:
+      flag: true
+      month_count: true
+      first_month: true
+      last_month: true
+      incident:
+        washout_months: 6
+
+composite_features:
+  cardio_metabolic_proxy:
+    logic: OR
+    components:
+      - dx_diabetes_flag_obs
+      - dx_hypertension_flag_obs
+
+comorbidity_groups:
+  diabetes_cm:
+    code_column: icd10_code
+    codes: ["E10", "E11", "E14"]
+    match: prefix
+    weight: 1
+  malignancy_cm:
+    code_column: icd10_code
+    codes: ["C"]
+    match: prefix
+    weight: 2
+
+comorbidity_weights:
+  diabetes_cm: 1
+  malignancy_cm: 2
+
+eligibility_rules:
+  pediatric_cohort:
+    birth_year_min: 2015
+    birth_year_max: 2024
+    min_observation_months: 12
+    require_dependent: false

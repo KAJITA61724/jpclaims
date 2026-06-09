@@ -1,0 +1,47 @@
+# Environment and secrets
+.env
+.env.*
+
+# Build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# IDE / OS
+.DS_Store
+.ipynb_checkpoints/
+
+# Data artifacts — never commit real claims data
+*.parquet
+*.pkl
+*.pickle
+*.xlsx
+*.xls
+data/
+raw/
+outputs/
+output/
+private/
+secret/
+secrets/
+
+# CSV: exclude by default; allow only synthetic fixtures
+*.csv
+!examples/sample_data/*.csv
+!tests/fixtures/*.csv
+
+# Generated example outputs
+examples/*.parquet
+examples/*.json
+examples/patient_datamart*
+examples/monthly_panel*
+examples/qc_report*

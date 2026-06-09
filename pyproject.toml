@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jpclaims"
+version = "0.1.0"
+description = "Python toolkit for cleaning and feature engineering Japanese health insurance claims data"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [{ name = "jpclaims contributors" }]
+keywords = ["claims", "receipt", "japan", "epidemiology", "healthcare", "RWD"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = [
+    "pandas>=2.0",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+parquet = ["pyarrow>=14.0"]
+dev = ["pytest>=7.0", "ruff>=0.4", "pyarrow>=14.0"]
+
+[project.urls]
+Homepage = "https://github.com/example/jpclaims"
+Documentation = "https://github.com/example/jpclaims#readme"
+Repository = "https://github.com/example/jpclaims"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
