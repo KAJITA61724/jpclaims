@@ -145,6 +145,7 @@ from jpclaims import (
 
 ## Documentation
 
+- [Project status](docs/project_status.md)
 - [Data privacy](docs/data_privacy.md)
 - [YAML code definitions](docs/code_definition_yaml.md)
 - [Feature engineering](docs/feature_engineering.md)
