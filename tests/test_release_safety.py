@@ -194,3 +194,27 @@ def test_gitignore_blocks_real_data_patterns():
     for pattern in ["data/", "outputs/", "*.parquet", ".env", "*.csv"]:
         assert pattern in gitignore
     assert "!examples/sample_data/*.csv" in gitignore
+
+
+PLACEHOLDER_URL_PATTERN = re.compile(
+    r"github\.com/example|example/jpclaims|YOUR_ORG|your-org|placeholder",
+    re.IGNORECASE,
+)
+
+
+def test_no_placeholder_urls_in_release_metadata():
+    """Public-facing metadata must not contain template repository URLs."""
+    targets = [
+        ROOT / "pyproject.toml",
+        ROOT / "README.md",
+        *ROOT.glob("docs/*.md"),
+    ]
+    hits: list[str] = []
+    for path in targets:
+        text = path.read_text(encoding="utf-8")
+        if PLACEHOLDER_URL_PATTERN.search(text):
+            hits.append(str(path.relative_to(ROOT)))
+    assert hits == [], f"placeholder URLs found in: {hits}"
+
+    pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    assert "github.com/KAJITA61724/jpclaims" in pyproject

@@ -31,9 +31,9 @@ parquet = ["pyarrow>=14.0"]
 dev = ["pytest>=7.0", "ruff>=0.4", "pyarrow>=14.0"]
 
 [project.urls]
-Homepage = "https://github.com/example/jpclaims"
-Documentation = "https://github.com/example/jpclaims#readme"
-Repository = "https://github.com/example/jpclaims"
+Homepage = "https://github.com/KAJITA61724/jpclaims"
+Documentation = "https://github.com/KAJITA61724/jpclaims#readme"
+Repository = "https://github.com/KAJITA61724/jpclaims"
 
 [tool.setuptools.packages.find]
 where = ["src"]
